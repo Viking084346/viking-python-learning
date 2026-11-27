@@ -472,7 +472,13 @@
     function bestStreak() { let best = 0, run = 0, prev = ""; for (const k of Object.keys(data.days).sort()) { run = prev && shift(prev, 1) === k ? run + 1 : 1; best = Math.max(best, run); prev = k; } return best; }
     function goalProgress() { let g = data.goal; if (g.done) return g.days; let k = dayKey(); if (!data.days[k]) k = shift(k, -1); let n = 0; while (data.days[k] && k >= g.start) { n++; k = shift(k, -1); } return Math.min(n, g.days); }
 
-    const toAuthEmail = username => `${username.trim().toLowerCase()}@pca.local`;
+    // แปลงชื่อผู้ใช้ (รองรับทั้งอังกฤษและไทย) เป็นอีเมลรูปแบบมาตรฐานที่ Supabase Auth ยอมรับ
+    const toAuthEmail = username => {
+      const clean = username.trim().toLowerCase();
+      if (/^[a-z0-9][a-z0-9._-]*$/.test(clean)) return `${clean}@pca-adventure.com`;
+      const hex = Array.from(new TextEncoder().encode(clean)).map(b => b.toString(16).padStart(2, "0")).join("");
+      return `u_${hex}@pca-adventure.com`;
+    };
 
     async function sbSaveProgress(uid, username, progressData) {
       if (!uid) return false;
@@ -492,7 +498,7 @@
       const { error } = await sb.from("player_progress").upsert(payload, { onConflict: "user_id" });
       if (error) {
         console.error("Supabase save error:", error);
-        $("storage-status").textContent = "บันทึกขึ้น Supabase ไม่สำเร็จ: " + error.message;
+        $("storage-status").textContent = "บันทึกขึ้น Supabase ไม่สำเร็จ (" + error.message + ") แต่สำรองในเครื่องแล้ว";
         return false;
       }
       $("storage-status").textContent = "บันทึกความคืบหน้าบน Supabase แล้ว";
@@ -611,8 +617,7 @@
       let r = readReminder(); if (!r) return;
       let k = dayKey(); for (let i = 0; i < 8; i++) { let [y, m, d] = k.split("-").map(Number); if (r.days.includes(new Date(y, m - 1, d).getDay()) && (i > 0 || r.time > timeNow())) break; k = shift(k, 1); }
       let start = k.replace(/-/g, "") + "T" + r.time.replace(":", "") + "00", stamp = new Date().toISOString().replace(/[-:]|\.\d+/g, "");
-      let ics = ["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//Python Code Adventure//TH","BEGIN:VEVENT","UID:pca-"+Date.now()+"@local","DTSTAMP:"+stamp,"DTSTART:"+start,"DURATION:PT15M","RRULE:FREQ=WEEKLY;BYDAY="+r.days.map(d => ICS_DAYS[d]).join(","),"SUMMARY:ฝึก Python","BEGIN:VALARM","ACTION:DISPLAY","DESCRIPTION:ฝึก Python","TRIGGER:PT0M","END:VALARM","END:VEVENT","END:VCALENDAR",""].join("
-");
+      let ics = ["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//Python Code Adventure//TH","BEGIN:VEVENT","UID:pca-"+Date.now()+"@local","DTSTAMP:"+stamp,"DTSTART:"+start,"DURATION:PT15M","RRULE:FREQ=WEEKLY;BYDAY="+r.days.map(d => ICS_DAYS[d]).join(","),"SUMMARY:ฝึก Python","BEGIN:VALARM","ACTION:DISPLAY","DESCRIPTION:ฝึก Python","TRIGGER:PT0M","END:VALARM","END:VEVENT","END:VCALENDAR",""].join("\r\n");
       let a = document.createElement("a"); a.href = URL.createObjectURL(new Blob([ics], { type: "text/calendar" })); a.download = "python-reminder.ics"; a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 1000);
       remMessage("สร้างไฟล์ปฏิทินแล้ว เปิดไฟล์เพื่อเพิ่มลงแอปปฏิทิน");
     });
@@ -622,18 +627,36 @@
 
     async function sbRegister(username, password) {
       const cleanUser = username.trim().toLowerCase();
-      const { data: authData, error } = await sb.auth.signUp({ email: toAuthEmail(cleanUser), password });
+      const email = toAuthEmail(cleanUser);
+      const { data: authData, error } = await sb.auth.signUp({
+        email,
+        password,
+        options: { data: { username: cleanUser } }
+      });
       if (error) throw error;
       const uid = authData.user?.id;
       if (!uid) throw new Error("สมัครสมาชิกไม่สำเร็จ กรุณาลองใหม่");
+
+      // หาก Supabase ยังเปิด Confirm email อยู่ session จะเป็น null
+      if (!authData.session) {
+        const { data: loginData, error: loginErr } = await sb.auth.signInWithPassword({ email, password });
+        if (loginErr) {
+          throw new Error("สมัครบัญชีสำเร็จแล้ว แต่ระบบ Supabase ยังเปิดการยืนยันอีเมลอยู่ กรุณาไปปิด 'Confirm email' ที่ Authentication > Providers > Email ในหน้าเว็บ Supabase");
+        }
+      }
+
       const initial = {
         user_id: uid,
         username: cleanUser,
         ...blankData(),
         goal: { days: 10, start: dayKey(), done: false }
       };
+
       const { error: insertErr } = await sb.from("player_progress").upsert(initial, { onConflict: "user_id" });
-      if (insertErr) throw insertErr;
+      if (insertErr) {
+        console.warn("player_progress upsert warning:", insertErr);
+        // ยังให้เข้าเล่นได้แม้ยังไม่ได้สร้างตาราง player_progress ใน SQL Editor
+      }
       return { uid, username: cleanUser, progress: initial };
     }
 
@@ -643,7 +666,9 @@
       if (error) throw error;
       const uid = authData.user.id;
       let { data: row, error: fetchErr } = await sb.from("player_progress").select("*").eq("user_id", uid).maybeSingle();
-      if (fetchErr) throw fetchErr;
+      if (fetchErr) {
+        console.warn("player_progress select warning:", fetchErr);
+      }
       if (!row) {
         row = { user_id: uid, username: cleanUser, ...blankData(), goal: { days: 10, start: dayKey(), done: false } };
         await sb.from("player_progress").insert(row);
@@ -666,8 +691,9 @@
     const submitAuth = async () => {
       const fail = t => { $("auth-msg").textContent = t; $("auth-msg").className = "form-msg error"; };
       let name = $("auth-user").value.trim().toLowerCase(), pass = $("auth-pass").value;
-      if (!/^[a-z0-9][a-z0-9_.-]{2,19}$/.test(name)) return fail("ชื่อผู้ใช้ต้องมี 3–20 ตัว ใช้ตัวอักษรภาษาอังกฤษ a-z ตัวเลข _ . - และไม่เว้นวรรค");
+      if (!/^[a-z0-9ก-๙][a-z0-9ก-๙_.-]{2,19}$/.test(name)) return fail("ชื่อผู้ใช้ต้องมี 3–20 ตัว ใช้ตัวอักษร ตัวเลข _ . - และไม่เว้นวรรค");
       if (pass.length < 6) return fail("รหัสผ่านต้องมีอย่างน้อย 6 ตัว");
+      if (!window.supabase) return fail("โหลดระบบ Supabase ไม่สำเร็จ กรุณาตรวจสอบการเชื่อมต่ออินเทอร์เน็ต");
       $("auth-submit").disabled = true;
       $("auth-msg").className = "form-msg";
       $("auth-msg").textContent = "กำลังเชื่อมต่อ Supabase...";
@@ -682,9 +708,13 @@
         $("auth-form").reset(); $("auth-msg").textContent = "";
         enter(sessionObj.username, sessionObj.progress, sessionObj.uid);
       } catch (err) {
+        console.error("Auth error:", err);
         let msg = err.message || "เกิดข้อผิดพลาด";
         if (msg.includes("Invalid login credentials")) msg = "ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง";
         else if (msg.includes("User already registered")) msg = "ชื่อผู้ใช้นี้ถูกใช้งานแล้ว";
+        else if (msg.includes("Email signups are disabled")) msg = "ระบบปิดการสมัครด้วยอีเมลไว้ กรุณาเปิด Email Provider ใน Supabase";
+        else if (msg.includes("Email address") && msg.includes("is invalid")) msg = "รูปแบบชื่อผู้ใช้ไม่รองรับ กรุณาใช้ตัวอักษรภาษาอังกฤษ a-z หรือตัวเลข";
+        else if (msg.includes("rate limit")) msg = "สมัครถี่เกินไป กรุณารอสักครู่แล้วลองใหม่";
         fail(msg);
       } finally {
         $("auth-submit").disabled = false;
@@ -723,7 +753,8 @@
         const { data: { session } } = await sb.auth.getSession();
         if (session && session.user) {
           const uid = session.user.id;
-          const fallbackName = (session.user.email || "").split("@")[0] || "player";
+          const metaName = session.user.user_metadata?.username;
+          const fallbackName = metaName || (session.user.email || "").split("@")[0] || "player";
           const { data: row } = await sb.from("player_progress").select("*").eq("user_id", uid).maybeSingle();
           enter((row && row.username) || fallbackName, row || {}, uid);
         }
