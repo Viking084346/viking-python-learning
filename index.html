@@ -102,6 +102,7 @@
     .hero{background:var(--blue);color:#fff;border-radius:50%;padding:.1em;display:grid}.hero .ic{width:.8em;height:.8em}
     .trophy .ic{width:1em;height:1em;color:#e3a415}
   </style>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
  </head>
  <body>
   <svg xmlns="http://www.w3.org/2000/svg" style="display:none"><symbol id="i-code" viewBox="0 0 24 24"><path d="M8 7l-5 5 5 5M16 7l5 5-5 5M14 4l-4 16"/></symbol><symbol id="i-map" viewBox="0 0 24 24"><path d="M3 6l6-2 6 2 6-2v14l-6 2-6-2-6 2zM9 4v14M15 6v14"/></symbol><symbol id="i-flame" viewBox="0 0 24 24"><path d="M12 3c1 4 6 6 6 11a6 6 0 0 1-12 0c0-3 2-4 3-6 1 1 1.5 2 1.5 3C12 9 12.500 6 12 3z"/></symbol><symbol id="i-chart" viewBox="0 0 24 24"><path d="M4 20h16M7 16v-5M12 16V5M17 16V9"/></symbol><symbol id="i-bell" viewBox="0 0 24 24"><path d="M6 16v-5a6 6 0 0 1 12 0v5l2 2H4zM10 21h4"/></symbol><symbol id="i-keyboard" viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 10h.01M10 10h.01M14 10h.01M18 10h.01M7 14h10"/></symbol><symbol id="i-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4.500"/><circle cx="12" cy="12" r="1"/></symbol><symbol id="i-book" viewBox="0 0 24 24"><path d="M12 6c-2-2-5-2-9-1v14c4-1 7-1 9 1 2-2 5-2 9-1V5c-4-1-7-1-9 1zM12 6v14"/></symbol><symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c1-5 4-7 8-7s7 2 8 7"/></symbol><symbol id="i-star" viewBox="0 0 24 24"><path d="M12 3l2.700 5.800 6.300.7-4.700 4.300 1.300 6.200L12 16.800 6.400 20l1.300-6.200L3 9.500l6.300-.7z"/></symbol><symbol id="i-bulb" viewBox="0 0 24 24"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.500 11c.5.5.5 1 .5 1h6s0-.5.5-1A6 6 0 0 0 12 3z"/></symbol><symbol id="i-door" viewBox="0 0 24 24"><path d="M6 21V3h12v18M3 21h18M15 12h.01"/></symbol><symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></symbol><symbol id="i-mountain" viewBox="0 0 24 24"><path d="M2 20l7-13 4 7 3-4 6 10z"/></symbol><symbol id="i-rock" viewBox="0 0 24 24"><path d="M3 18l3-8 6-4 6 3 3 9zM12 6l-1 7 5 5"/></symbol><symbol id="i-water" viewBox="0 0 24 24"><path d="M3 8q3-3 6 0t6 0 6 0M3 13q3-3 6 0t6 0 6 0M3 18q3-3 6 0t6 0 6 0"/></symbol><symbol id="i-pit" viewBox="0 0 24 24"><ellipse cx="12" cy="13" rx="9" ry="6"/><ellipse cx="12" cy="14" rx="5" ry="3" fill="currentColor"/></symbol><symbol id="i-bridge" viewBox="0 0 24 24"><path d="M3 7h18M3 17h18M6 7v10M10 7v10M14 7v10M18 7v10"/></symbol><symbol id="i-key" viewBox="0 0 24 24"><circle cx="8" cy="15" r="4"/><path d="M11 12l9-9M16 7l3 3"/></symbol><symbol id="i-flag" viewBox="0 0 24 24"><path d="M6 21V4M6 4h12l-3 4 3 4H6"/></symbol><symbol id="i-trophy" viewBox="0 0 24 24"><path d="M7 4h10v5a5 5 0 0 1-10 0zM7 6H4c0 3 1 4 3 4M17 6h3c0 3-1 4-3 4M12 14v4M8 21h8M9 18h6"/></symbol><symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></symbol><symbol id="i-play" viewBox="0 0 24 24"><path d="M7 4l13 8-13 8z"/></symbol><symbol id="i-step" viewBox="0 0 24 24"><path d="M5 4l10 8-10 8zM19 5v14"/></symbol><symbol id="i-reset" viewBox="0 0 24 24"><path d="M4 12a8 8 0 1 0 3-6.200M4 3v5h5"/></symbol><symbol id="i-arrow" viewBox="0 0 24 24"><path d="M4 12h15M13 6l6 6-6 6"/></symbol></svg>
@@ -132,7 +133,7 @@
      <button class="btn" id="auth-submit" type="button" style="width:100%">เข้าสู่ระบบ</button>
      <p id="auth-msg" class="form-msg" role="alert"></p>
     </form>
-    <p>บัญชีและความคืบหน้าเก็บไว้ในเบราว์เซอร์ของเครื่องนี้เท่านั้น ใช้ข้ามเครื่องไม่ได้ กู้รหัสผ่านไม่ได้ และหากล้างข้อมูลเบราว์เซอร์ ข้อมูลจะหายไป</p>
+    <p>บัญชีและความคืบหน้าเชื่อมต่อและบันทึกบน Supabase อัตโนมัติ สามารถเข้าสู่ระบบเพื่อซิงก์ความคืบหน้าข้ามอุปกรณ์ได้</p>
    </section>
   </main>
   <div id="app-view" class="app" hidden>
@@ -451,169 +452,285 @@
     snippets.forEach(text=>{let b=document.createElement("button");b.type="button";b.className="chip canva-button";b.textContent=text.split("\n")[0];b.addEventListener("click",()=>{let t=$("code-input"),start=t.selectionStart,end=t.selectionEnd,needsNewline=start>0&&t.value[start-1]!=="\n";t.setRangeText((needsNewline?"\n":"")+text,start,end,"end");t.dispatchEvent(new Event("input"));t.focus()});$("command-chips").appendChild(b)});
     $("replay-btn").addEventListener("click",()=>loadLevel(level));$("next-btn").addEventListener("click",()=>{if(level<4)loadLevel(level+1)});
     $("win-overlay").addEventListener("click",e=>{if(e.target===$("win-overlay"))$("win-overlay").classList.remove("show")});
-    /* ---------- บัญชี สถิติ streak และการแจ้งเตือน ---------- */
-    const USERS_KEY="pca_users", SESSION_KEY="pca_session", dataKey=u=>"pca_data_"+u;
-    const DAY_NAMES=["อา.","จ.","อ.","พ.","พฤ.","ศ.","ส."], ICS_DAYS=["SU","MO","TU","WE","TH","FR","SA"];
-    let user=null, data=null, authMode="login";
-    const memory={};
-    const canStore=(()=>{try{localStorage.setItem("pca_test","1");localStorage.removeItem("pca_test");return true}catch(e){return false}})();
-    const readJSON=(k,fallback)=>{try{return JSON.parse(canStore?localStorage.getItem(k):memory[k]??null)??fallback}catch(e){return fallback}};
-    const writeJSON=(k,v)=>{try{let t=JSON.stringify(v);if(canStore)localStorage.setItem(k,t);else memory[k]=t;return true}catch(e){return false}};
-    const hasUser=(users,name)=>Object.prototype.hasOwnProperty.call(users,name);
-    const readUsersExist=()=>Object.keys(readJSON(USERS_KEY,{})).length>0;
-    const blankData=()=>({records:[],runs:{},fails:{},days:{},points:0,goal:{days:10,start:dayKey(),done:false},history:[],reminder:{enabled:false,time:"19:00",days:[0,1,2,3,4,5,6],lastFired:""}});
-    function dayKey(d=new Date()){return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`}
-    function shift(key,n){let [y,m,d]=key.split("-").map(Number);return dayKey(new Date(y,m-1,d+n))}
-    function currentStreak(){let k=dayKey();if(!data.days[k])k=shift(k,-1);let n=0;while(data.days[k]){n++;k=shift(k,-1)}return n}
-    function bestStreak(){let best=0,run=0,prev="";for(const k of Object.keys(data.days).sort()){run=prev&&shift(prev,1)===k?run+1:1;best=Math.max(best,run);prev=k}return best}
-    function goalProgress(){let g=data.goal;if(g.done)return g.days;let k=dayKey();if(!data.days[k])k=shift(k,-1);let n=0;while(data.days[k]&&k>=g.start){n++;k=shift(k,-1)}return Math.min(n,g.days)}
-    function save(){if(!user)return false;let ok=writeJSON(dataKey(user),data);$("storage-status").textContent=!canStore?"ความคืบหน้าอยู่ชั่วคราว จะหายเมื่อปิดหน้านี้":ok?"บันทึกความคืบหน้าในเครื่องนี้แล้ว":"บันทึกไม่สำเร็จ พื้นที่เก็บข้อมูลของเบราว์เซอร์อาจเต็มหรือถูกปิด";return ok}
-    function recordRun(n){if(!user)return;data.runs[n]=(data.runs[n]||0)+1;save()}
-    function recordFail(n){if(!user)return;data.fails[n]=(data.fails[n]||0)+1;save()}
-    function recordWin(n,stars,score,steps){
-      if(!user)return;
-      let today=dayKey(),first=!data.days[today],note="";
-      data.records.push({level:n,stars,score,steps,date:today});
-      data.days[today]=(data.days[today]||0)+1;
-      if(first){let s=currentStreak(),p=Math.min(30,10+(s-1)*2);data.points+=p;note=`เรียนต่อเนื่อง ${s} วัน ได้ ${p} แต้ม streak`}
-      else note=`วันนี้นับความต่อเนื่องแล้ว (${currentStreak()} วัน)`;
-      if(!data.goal.done&&goalProgress()>=data.goal.days){let bonus=data.goal.days*5;data.goal.done=true;data.points+=bonus;data.history.push({days:data.goal.days,date:today});note+=` • ทำเป้าหมาย ${data.goal.days} วันสำเร็จ โบนัส ${bonus} แต้ม`}
-      withIcon("win-streak","flame",save()?note:"ผ่านด่านแล้ว แต่บันทึกผลไม่สำเร็จ");
+    /* ---------- บัญชี สถิติ streak และการแจ้งเตือน (Supabase) ---------- */
+    const SUPABASE_URL = "https://rjnmxgorxtkpotdexzim.supabase.co";
+    const SUPABASE_ANON_KEY = "sb_publishable_z8-q8cI1YgYqnHsTSVmQrg_DAgKb0Fk";
+    const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    const dataKey = u => "pca_data_" + u;
+    const DAY_NAMES = ["อา.","จ.","อ.","พ.","พฤ.","ศ.","ส."], ICS_DAYS = ["SU","MO","TU","WE","TH","FR","SA"];
+    let user = null, userId = null, data = null, authMode = "login";
+    const memory = {};
+    const canStore = (() => { try { localStorage.setItem("pca_test", "1"); localStorage.removeItem("pca_test"); return true; } catch (e) { return false; } })();
+    const readJSON = (k, fallback) => { try { return JSON.parse(canStore ? localStorage.getItem(k) : memory[k] ?? null) ?? fallback; } catch (e) { return fallback; } };
+    const writeJSON = (k, v) => { try { let t = JSON.stringify(v); if (canStore) localStorage.setItem(k, t); else memory[k] = t; return true; } catch (e) { return false; } };
+    const blankData = () => ({ records: [], runs: {}, fails: {}, days: {}, points: 0, goal: { days: 10, start: dayKey(), done: false }, history: [], reminder: { enabled: false, time: "19:00", days: [0,1,2,3,4,5,6], lastFired: "" } });
+
+    function dayKey(d = new Date()) { return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`; }
+    function shift(key, n) { let [y,m,d] = key.split("-").map(Number); return dayKey(new Date(y, m-1, d+n)); }
+    function currentStreak() { let k = dayKey(); if (!data.days[k]) k = shift(k, -1); let n = 0; while (data.days[k]) { n++; k = shift(k, -1); } return n; }
+    function bestStreak() { let best = 0, run = 0, prev = ""; for (const k of Object.keys(data.days).sort()) { run = prev && shift(prev, 1) === k ? run + 1 : 1; best = Math.max(best, run); prev = k; } return best; }
+    function goalProgress() { let g = data.goal; if (g.done) return g.days; let k = dayKey(); if (!data.days[k]) k = shift(k, -1); let n = 0; while (data.days[k] && k >= g.start) { n++; k = shift(k, -1); } return Math.min(n, g.days); }
+
+    const toAuthEmail = username => `${username.trim().toLowerCase()}@pca.local`;
+
+    async function sbSaveProgress(uid, username, progressData) {
+      if (!uid) return false;
+      const payload = {
+        user_id: uid,
+        username,
+        records: progressData.records,
+        runs: progressData.runs,
+        fails: progressData.fails,
+        days: progressData.days,
+        points: progressData.points,
+        goal: progressData.goal,
+        history: progressData.history,
+        reminder: progressData.reminder,
+        updated_at: new Date().toISOString()
+      };
+      const { error } = await sb.from("player_progress").upsert(payload, { onConflict: "user_id" });
+      if (error) {
+        console.error("Supabase save error:", error);
+        $("storage-status").textContent = "บันทึกขึ้น Supabase ไม่สำเร็จ: " + error.message;
+        return false;
+      }
+      $("storage-status").textContent = "บันทึกความคืบหน้าบน Supabase แล้ว";
+      return true;
+    }
+
+    function save() {
+      if (!user) return false;
+      writeJSON(dataKey(user), data);
+      if (userId) {
+        $("storage-status").textContent = "กำลังบันทึกขึ้น Supabase...";
+        sbSaveProgress(userId, user, data);
+        return true;
+      }
+      $("storage-status").textContent = !canStore ? "ความคืบหน้าอยู่ชั่วคราว จะหายเมื่อปิดหน้านี้" : "บันทึกความคืบหน้าในเครื่องนี้แล้ว";
+      return true;
+    }
+
+    function recordRun(n) { if (!user) return; data.runs[n] = (data.runs[n] || 0) + 1; save(); }
+    function recordFail(n) { if (!user) return; data.fails[n] = (data.fails[n] || 0) + 1; save(); }
+    function recordWin(n, stars, score, steps) {
+      if (!user) return;
+      let today = dayKey(), first = !data.days[today], note = "";
+      data.records.push({ level: n, stars, score, steps, date: today });
+      data.days[today] = (data.days[today] || 0) + 1;
+      if (first) { let s = currentStreak(), p = Math.min(30, 10 + (s - 1) * 2); data.points += p; note = `เรียนต่อเนื่อง ${s} วัน ได้ ${p} แต้ม streak`; }
+      else note = `วันนี้นับความต่อเนื่องแล้ว (${currentStreak()} วัน)`;
+      if (!data.goal.done && goalProgress() >= data.goal.days) {
+        let bonus = data.goal.days * 5;
+        data.goal.done = true; data.points += bonus; data.history.push({ days: data.goal.days, date: today });
+        note += ` • ทำเป้าหมาย ${data.goal.days} วันสำเร็จ โบนัส ${bonus} แต้ม`;
+      }
+      withIcon("win-streak", "flame", save() ? note : "ผ่านด่านแล้ว แต่บันทึกผลไม่สำเร็จ");
       refresh();
     }
-    function refresh(){
-      if(!user)return;
-      records=data.records;renderLevels();
-      let streak=currentStreak(),done=!!data.days[dayKey()];
-      withIcon("streak-badge","flame",`${streak} วัน • ${data.points} แต้ม`);
-      $("today-banner").className="today"+(done?" done":"");
-      $("today-banner").textContent=done?`วันนี้เรียนแล้ว ความต่อเนื่อง ${streak} วัน (เป้าหมาย ${goalProgress()}/${data.goal.days} วัน)`:streak?`วันนี้ยังไม่ได้เรียน ผ่าน 1 ด่านเพื่อรักษาความต่อเนื่อง ${streak} วันไว้`:"ผ่าน 1 ด่านวันนี้เพื่อเริ่มนับความต่อเนื่อง";
-      renderStats();renderGoal();
-    }
-    function renderStats(){
-      let today=dayKey(),passed=new Set(data.records.map(r=>r.level));
-      $("s-current").textContent=currentStreak();$("s-best").textContent=bestStreak();$("s-points").textContent=data.points;$("s-levels").textContent=passed.size;
-      let week=[...Array(7)].map((_,i)=>shift(today,i-6)),counts=week.map(k=>data.days[k]||0),max=Math.max(1,...counts),total=counts.reduce((a,b)=>a+b,0);
-      $("week-summary").textContent=total?`รวม ${total} ครั้ง จาก ${counts.filter(Boolean).length} วันที่เข้าเรียน`:"ยังไม่มีข้อมูลใน 7 วันนี้ ไปที่แท็บผจญภัยและผ่านด่านแรกเพื่อเริ่มเก็บสถิติ";
-      $("week-chart").innerHTML=week.map((k,i)=>{let [y,m,d]=k.split("-").map(Number);return `<div class="bar"><span>${counts[i]}</span><i style="height:${counts[i]?Math.round(counts[i]/max*120):3}px"></i><span>${DAY_NAMES[new Date(y,m-1,d).getDay()]}</span></div>`}).join("");
-      let start=shift(today,-new Date().getDay()-28);
-      $("calendar").innerHTML=DAY_NAMES.map(n=>`<span class="head">${n}</span>`).join("")+[...Array(35)].map((_,i)=>{let k=shift(start,i);return `<span class="${data.days[k]?"on":""} ${k===today?"now":""}" title="${k}">${k>today?"":Number(k.slice(8))}</span>`}).join("");
-      let runs=Object.values(data.runs).reduce((a,b)=>a+b,0),fails=Object.values(data.fails).reduce((a,b)=>a+b,0);
-      $("accuracy").textContent=runs?`รันโค้ดทั้งหมด ${runs} ครั้ง ผ่านด่าน ${data.records.length} ครั้ง ไม่สำเร็จ ${fails} ครั้ง`:"ยังไม่เคยรันโค้ด ตัวเลขจะปรากฏหลังจากลองรันครั้งแรก";
-      $("level-table").innerHTML=levels.map((l,i)=>{let rs=data.records.filter(r=>r.level===i+1),s=rs.length?Math.max(...rs.map(r=>r.stars)):0;return `<tr><td>${i+1}. ${l.name}</td><td>${s?starRow(s):"ยังไม่ผ่าน"}</td><td>${rs.length?Math.max(...rs.map(r=>r.score)):"-"}</td><td>${rs.length?Math.min(...rs.map(r=>r.steps)):"-"}</td><td>${data.runs[i+1]||0}</td><td>${data.fails[i+1]||0}</td><td>${rs.length}</td></tr>`}).join("");
-    }
-    function renderGoal(){
-      let g=data.goal,p=goalProgress();
-      $("goal-status").textContent=g.done?`สำเร็จแล้ว! คุณเรียนต่อเนื่องครบ ${g.days} วัน เลือกเป้าหมายใหม่ได้เลย`:`เป้าหมาย ${g.days} วันต่อเนื่อง ทำได้ ${p} วัน เหลือ ${g.days-p} วัน`;
-      $("goal-bar").firstElementChild.style.width=(p/g.days*100)+"%";$("goal-bar").setAttribute("aria-valuemax",g.days);$("goal-bar").setAttribute("aria-valuenow",p);
-      for(const b of $("goal-options").children)b.classList.toggle("active",Number(b.dataset.days)===g.days);
-      $("goal-history").textContent=data.history.length?"เป้าหมายที่เคยสำเร็จ: "+data.history.map(h=>`${h.days} วัน (${h.date})`).join(", "):"";
-    }
-    function setGoal(days){
-      let el=$("goal-msg");el.className="form-msg";
-      if(!Number.isInteger(days)||days<3||days>365){el.className="form-msg error";el.textContent="กรอกจำนวนวันตั้งแต่ 3 ถึง 365";return}
-      if(days===data.goal.days&&!data.goal.done){el.textContent="คุณกำลังทำเป้าหมายนี้อยู่แล้ว";return}
-      let today=dayKey(),finishedToday=data.history.some(h=>h.date===today);
-      data.goal={days,start:finishedToday?shift(today,1):today,done:false};
-      el.textContent=save()?`ตั้งเป้าหมาย ${days} วันแล้ว`+(finishedToday?" เริ่มนับตั้งแต่พรุ่งนี้":""):"บันทึกเป้าหมายไม่สำเร็จ";refresh();
-    }
-    [3,10,20,30,60].forEach(n=>{let b=document.createElement("button");b.type="button";b.dataset.days=n;b.textContent=n+" วัน";b.addEventListener("click",()=>setGoal(n));$("goal-options").appendChild(b)});
-    $("goal-custom-btn").addEventListener("click",()=>setGoal(Number($("goal-custom").value)));
 
-    DAY_NAMES.forEach((n,i)=>{let l=document.createElement("label");l.innerHTML=`<input type="checkbox" value="${i}"> ${n}`;$("rem-days").appendChild(l)});
-    const dayBoxes=()=>[...$("rem-days").querySelectorAll("input")];
-    const timeNow=()=>new Date().toTimeString().slice(0,5);
-    function fillReminder(){let r=data.reminder;$("rem-enabled").checked=r.enabled;$("rem-time").value=r.time;dayBoxes().forEach(c=>c.checked=r.days.includes(Number(c.value)));$("rem-msg").textContent=""}
-    function remMessage(text,error){$("rem-msg").textContent=text;$("rem-msg").className="form-msg"+(error?" error":"")}
-    function readReminder(){let time=$("rem-time").value,days=dayBoxes().filter(c=>c.checked).map(c=>Number(c.value));
-      if(!time){remMessage("กรุณาเลือกเวลา",true);return null}if(!days.length){remMessage("เลือกอย่างน้อย 1 วัน",true);return null}return{time,days}}
-    async function askPermission(){if(!("Notification" in window))return "unsupported";if(Notification.permission==="default"){try{return await Notification.requestPermission()}catch(e){return "unsupported"}}return Notification.permission}
-    function notify(text){
-      $("toast-text").textContent=text;$("toast").hidden=false;
-      try{if("Notification" in window&&Notification.permission==="granted"){new Notification("Python Code Adventure",{body:text,tag:"pca-reminder"});return true}}catch(e){}
+    function refresh() {
+      if (!user) return;
+      records = data.records; renderLevels();
+      let streak = currentStreak(), done = !!data.days[dayKey()];
+      withIcon("streak-badge", "flame", `${streak} วัน • ${data.points} แต้ม`);
+      $("today-banner").className = "today" + (done ? " done" : "");
+      $("today-banner").textContent = done
+        ? `วันนี้เรียนแล้ว ความต่อเนื่อง ${streak} วัน (เป้าหมาย ${goalProgress()}/${data.goal.days} วัน)`
+        : streak ? `วันนี้ยังไม่ได้เรียน ผ่าน 1 ด่านเพื่อรักษาความต่อเนื่อง ${streak} วันไว้` : "ผ่าน 1 ด่านวันนี้เพื่อเริ่มนับความต่อเนื่อง";
+      renderStats(); renderGoal();
+    }
+
+    function renderStats() {
+      let today = dayKey(), passed = new Set(data.records.map(r => r.level));
+      $("s-current").textContent = currentStreak(); $("s-best").textContent = bestStreak(); $("s-points").textContent = data.points; $("s-levels").textContent = passed.size;
+      let week = [...Array(7)].map((_, i) => shift(today, i - 6)), counts = week.map(k => data.days[k] || 0), max = Math.max(1, ...counts), total = counts.reduce((a, b) => a + b, 0);
+      $("week-summary").textContent = total ? `รวม ${total} ครั้ง จาก ${counts.filter(Boolean).length} วันที่เข้าเรียน` : "ยังไม่มีข้อมูลใน 7 วันนี้ ไปที่แท็บผจญภัยและผ่านด่านแรกเพื่อเริ่มเก็บสถิติ";
+      $("week-chart").innerHTML = week.map((k, i) => { let [y, m, d] = k.split("-").map(Number); return `<div class="bar"><span>${counts[i]}</span><i style="height:${counts[i] ? Math.round(counts[i] / max * 120) : 3}px"></i><span>${DAY_NAMES[new Date(y, m - 1, d).getDay()]}</span></div>`; }).join("");
+      let start = shift(today, -new Date().getDay() - 28);
+      $("calendar").innerHTML = DAY_NAMES.map(n => `<span class="head">${n}</span>`).join("") + [...Array(35)].map((_, i) => { let k = shift(start, i); return `<span class="${data.days[k] ? "on" : ""} ${k === today ? "now" : ""}" title="${k}">${k > today ? "" : Number(k.slice(8))}</span>`; }).join("");
+      let runs = Object.values(data.runs).reduce((a, b) => a + b, 0), fails = Object.values(data.fails).reduce((a, b) => a + b, 0);
+      $("accuracy").textContent = runs ? `รันโค้ดทั้งหมด ${runs} ครั้ง ผ่านด่าน ${data.records.length} ครั้ง ไม่สำเร็จ ${fails} ครั้ง` : "ยังไม่เคยรันโค้ด ตัวเลขจะปรากฏหลังจากลองรันครั้งแรก";
+      $("level-table").innerHTML = levels.map((l, i) => { let rs = data.records.filter(r => r.level === i + 1), s = rs.length ? Math.max(...rs.map(r => r.stars)) : 0; return `<tr><td>${i+1}. ${l.name}</td><td>${s ? starRow(s) : "ยังไม่ผ่าน"}</td><td>${rs.length ? Math.max(...rs.map(r => r.score)) : "-"}</td><td>${rs.length ? Math.min(...rs.map(r => r.steps)) : "-"}</td><td>${data.runs[i+1] || 0}</td><td>${data.fails[i+1] || 0}</td><td>${rs.length}</td></tr>`; }).join("");
+    }
+
+    function renderGoal() {
+      let g = data.goal, p = goalProgress();
+      $("goal-status").textContent = g.done ? `สำเร็จแล้ว! คุณเรียนต่อเนื่องครบ ${g.days} วัน เลือกเป้าหมายใหม่ได้เลย` : `เป้าหมาย ${g.days} วันต่อเนื่อง ทำได้ ${p} วัน เหลือ ${g.days - p} วัน`;
+      $("goal-bar").firstElementChild.style.width = (p / g.days * 100) + "%"; $("goal-bar").setAttribute("aria-valuemax", g.days); $("goal-bar").setAttribute("aria-valuenow", p);
+      for (const b of $("goal-options").children) b.classList.toggle("active", Number(b.dataset.days) === g.days);
+      $("goal-history").textContent = data.history.length ? "เป้าหมายที่เคยสำเร็จ: " + data.history.map(h => `${h.days} วัน (${h.date})`).join(", ") : "";
+    }
+
+    function setGoal(days) {
+      let el = $("goal-msg"); el.className = "form-msg";
+      if (!Number.isInteger(days) || days < 3 || days > 365) { el.className = "form-msg error"; el.textContent = "กรอกจำนวนวันตั้งแต่ 3 ถึง 365"; return; }
+      if (days === data.goal.days && !data.goal.done) { el.textContent = "คุณกำลังทำเป้าหมายนี้อยู่แล้ว"; return; }
+      let today = dayKey(), finishedToday = data.history.some(h => h.date === today);
+      data.goal = { days, start: finishedToday ? shift(today, 1) : today, done: false };
+      el.textContent = save() ? `ตั้งเป้าหมาย ${days} วันแล้ว` + (finishedToday ? " เริ่มนับตั้งแต่พรุ่งนี้" : "") : "บันทึกเป้าหมายไม่สำเร็จ"; refresh();
+    }
+    [3, 10, 20, 30, 60].forEach(n => { let b = document.createElement("button"); b.type = "button"; b.dataset.days = n; b.textContent = n + " วัน"; b.addEventListener("click", () => setGoal(n)); $("goal-options").appendChild(b); });
+    $("goal-custom-btn").addEventListener("click", () => setGoal(Number($("goal-custom").value)));
+
+    DAY_NAMES.forEach((n, i) => { let l = document.createElement("label"); l.innerHTML = `<input type="checkbox" value="${i}"> ${n}`; $("rem-days").appendChild(l); });
+    const dayBoxes = () => [...$("rem-days").querySelectorAll("input")];
+    const timeNow = () => new Date().toTimeString().slice(0, 5);
+    function fillReminder() { let r = data.reminder; $("rem-enabled").checked = r.enabled; $("rem-time").value = r.time; dayBoxes().forEach(c => c.checked = r.days.includes(Number(c.value))); $("rem-msg").textContent = ""; }
+    function remMessage(text, error) { $("rem-msg").textContent = text; $("rem-msg").className = "form-msg" + (error ? " error" : ""); }
+    function readReminder() {
+      let time = $("rem-time").value, days = dayBoxes().filter(c => c.checked).map(c => Number(c.value));
+      if (!time) { remMessage("กรุณาเลือกเวลา", true); return null; }
+      if (!days.length) { remMessage("เลือกอย่างน้อย 1 วัน", true); return null; }
+      return { time, days };
+    }
+    async function askPermission() { if (!("Notification" in window)) return "unsupported"; if (Notification.permission === "default") { try { return await Notification.requestPermission(); } catch (e) { return "unsupported"; } } return Notification.permission; }
+    function notify(text) {
+      $("toast-text").textContent = text; $("toast").hidden = false;
+      try { if ("Notification" in window && Notification.permission === "granted") { new Notification("Python Code Adventure", { body: text, tag: "pca-reminder" }); return true; } } catch (e) {}
       return false;
     }
-    $("rem-save").addEventListener("click",async()=>{
-      let r=readReminder();if(!r)return;
-      let enabled=$("rem-enabled").checked,owner=user,permission=enabled?await askPermission():"";
-      if(user!==owner)return;
-      data.reminder={enabled,...r,lastFired:r.time<=timeNow()?dayKey():""};
-      if(!save())return remMessage("บันทึกไม่สำเร็จ",true);
-      if(!enabled)return remMessage("บันทึกแล้ว ปิดการแจ้งเตือนอยู่");
-      remMessage(`บันทึกแล้ว จะเตือนเวลา ${r.time} น.`+(permission==="granted"?"":" (เบราว์เซอร์ไม่อนุญาตการแจ้งเตือน จะแสดงเป็นข้อความในหน้านี้แทน)"));
+    $("rem-save").addEventListener("click", async () => {
+      let r = readReminder(); if (!r) return;
+      let enabled = $("rem-enabled").checked, owner = user, permission = enabled ? await askPermission() : "";
+      if (user !== owner) return;
+      data.reminder = { enabled, ...r, lastFired: r.time <= timeNow() ? dayKey() : "" };
+      if (!save()) return remMessage("บันทึกไม่สำเร็จ", true);
+      if (!enabled) return remMessage("บันทึกแล้ว ปิดการแจ้งเตือนอยู่");
+      remMessage(`บันทึกแล้ว จะเตือนเวลา ${r.time} น.` + (permission === "granted" ? "" : " (เบราว์เซอร์ไม่อนุญาตการแจ้งเตือน จะแสดงเป็นข้อความในหน้านี้แทน)"));
     });
-    $("rem-test").addEventListener("click",async()=>{await askPermission();let sent=notify("นี่คือตัวอย่างการแจ้งเตือน ถึงเวลาฝึก Python แล้ว");remMessage(sent?"ส่งการแจ้งเตือนทดสอบแล้ว หากไม่เห็น ให้ตรวจการตั้งค่าการแจ้งเตือนของเครื่อง":"แสดงได้เฉพาะข้อความในหน้านี้ เพราะเบราว์เซอร์ไม่อนุญาตหรือไม่รองรับ")});
-    $("toast-close").addEventListener("click",()=>$("toast").hidden=true);
-    function checkReminder(){
-      if(!user)return;let r=data.reminder,today=dayKey();
-      if(!r.enabled||r.lastFired===today||!r.days.includes(new Date().getDay())||timeNow()<r.time||data.days[today])return;
-      r.lastFired=today;save();let s=currentStreak();
-      notify(s?`ถึงเวลาเรียนแล้ว ผ่าน 1 ด่านเพื่อรักษาความต่อเนื่อง ${s} วัน`:"ถึงเวลาเรียนแล้ว มาเริ่มความต่อเนื่องวันแรกกัน");
+    $("rem-test").addEventListener("click", async () => { await askPermission(); let sent = notify("นี่คือตัวอย่างการแจ้งเตือน ถึงเวลาฝึก Python แล้ว"); remMessage(sent ? "ส่งการแจ้งเตือนทดสอบแล้ว หากไม่เห็น ให้ตรวจการตั้งค่าการแจ้งเตือนของเครื่อง" : "แสดงได้เฉพาะข้อความในหน้านี้ เพราะเบราว์เซอร์ไม่อนุญาตหรือไม่รองรับ"); });
+    $("toast-close").addEventListener("click", () => $("toast").hidden = true);
+    function checkReminder() {
+      if (!user) return; let r = data.reminder, today = dayKey();
+      if (!r.enabled || r.lastFired === today || !r.days.includes(new Date().getDay()) || timeNow() < r.time || data.days[today]) return;
+      r.lastFired = today; save(); let s = currentStreak();
+      notify(s ? `ถึงเวลาเรียนแล้ว ผ่าน 1 ด่านเพื่อรักษาความต่อเนื่อง ${s} วัน` : "ถึงเวลาเรียนแล้ว มาเริ่มความต่อเนื่องวันแรกกัน");
     }
-    $("ics-btn").addEventListener("click",()=>{
-      let r=readReminder();if(!r)return;
-      let k=dayKey();for(let i=0;i<8;i++){let [y,m,d]=k.split("-").map(Number);if(r.days.includes(new Date(y,m-1,d).getDay())&&(i>0||r.time>timeNow()))break;k=shift(k,1)}
-      let start=k.replace(/-/g,"")+"T"+r.time.replace(":","")+"00",stamp=new Date().toISOString().replace(/[-:]|\.\d+/g,"");
-      let ics=["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//Python Code Adventure//TH","BEGIN:VEVENT","UID:pca-"+Date.now()+"@local","DTSTAMP:"+stamp,"DTSTART:"+start,"DURATION:PT15M","RRULE:FREQ=WEEKLY;BYDAY="+r.days.map(d=>ICS_DAYS[d]).join(","),"SUMMARY:ฝึก Python","BEGIN:VALARM","ACTION:DISPLAY","DESCRIPTION:ฝึก Python","TRIGGER:PT0M","END:VALARM","END:VEVENT","END:VCALENDAR",""].join("\r\n");
-      let a=document.createElement("a");a.href=URL.createObjectURL(new Blob([ics],{type:"text/calendar"}));a.download="python-reminder.ics";a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);
+    $("ics-btn").addEventListener("click", () => {
+      let r = readReminder(); if (!r) return;
+      let k = dayKey(); for (let i = 0; i < 8; i++) { let [y, m, d] = k.split("-").map(Number); if (r.days.includes(new Date(y, m - 1, d).getDay()) && (i > 0 || r.time > timeNow())) break; k = shift(k, 1); }
+      let start = k.replace(/-/g, "") + "T" + r.time.replace(":", "") + "00", stamp = new Date().toISOString().replace(/[-:]|\.\d+/g, "");
+      let ics = ["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//Python Code Adventure//TH","BEGIN:VEVENT","UID:pca-"+Date.now()+"@local","DTSTAMP:"+stamp,"DTSTART:"+start,"DURATION:PT15M","RRULE:FREQ=WEEKLY;BYDAY="+r.days.map(d => ICS_DAYS[d]).join(","),"SUMMARY:ฝึก Python","BEGIN:VALARM","ACTION:DISPLAY","DESCRIPTION:ฝึก Python","TRIGGER:PT0M","END:VALARM","END:VEVENT","END:VCALENDAR",""].join("
+");
+      let a = document.createElement("a"); a.href = URL.createObjectURL(new Blob([ics], { type: "text/calendar" })); a.download = "python-reminder.ics"; a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 1000);
       remMessage("สร้างไฟล์ปฏิทินแล้ว เปิดไฟล์เพื่อเพิ่มลงแอปปฏิทิน");
     });
 
-    document.querySelectorAll(".tab").forEach(t=>t.addEventListener("click",()=>showView(t.dataset.view)));
-    function showView(name){for(const v of ["play","stats","goals"])$("view-"+v).hidden=v!==name;document.querySelectorAll(".tab").forEach(t=>t.classList.toggle("active",t.dataset.view===name));refresh()}
+    document.querySelectorAll(".tab").forEach(t => t.addEventListener("click", () => showView(t.dataset.view)));
+    function showView(name) { for (const v of ["play", "stats", "goals"]) $("view-" + v).hidden = v !== name; document.querySelectorAll(".tab").forEach(t => t.classList.toggle("active", t.dataset.view === name)); refresh(); }
 
-    function simpleHash(text){let a=0x811c9dc5,b=0x01000193;for(let r=0;r<2000;r++)for(let i=0;i<text.length;i++){let c=text.charCodeAt(i);a=Math.imul(a^c,16777619);b=Math.imul(b^c^(a>>>13),2246822519)}return (a>>>0).toString(16)+"-"+(b>>>0).toString(16)}
-    async function hashPassword(password,salt,alg){
-      if(alg==="simple")return simpleHash(salt+"|"+password);
-      if(!window.crypto||!crypto.subtle)throw Error("บัญชีนี้ต้องเปิดผ่าน https หรือเบราว์เซอร์ที่สมัครไว้");
-      let key=await crypto.subtle.importKey("raw",new TextEncoder().encode(password),"PBKDF2",false,["deriveBits"]);
-      let bits=await crypto.subtle.deriveBits({name:"PBKDF2",hash:"SHA-256",salt:new TextEncoder().encode(salt),iterations:100000},key,256);
-      return [...new Uint8Array(bits)].map(b=>b.toString(16).padStart(2,"0")).join("");
+    async function sbRegister(username, password) {
+      const cleanUser = username.trim().toLowerCase();
+      const { data: authData, error } = await sb.auth.signUp({ email: toAuthEmail(cleanUser), password });
+      if (error) throw error;
+      const uid = authData.user?.id;
+      if (!uid) throw new Error("สมัครสมาชิกไม่สำเร็จ กรุณาลองใหม่");
+      const initial = {
+        user_id: uid,
+        username: cleanUser,
+        ...blankData(),
+        goal: { days: 10, start: dayKey(), done: false }
+      };
+      const { error: insertErr } = await sb.from("player_progress").upsert(initial, { onConflict: "user_id" });
+      if (insertErr) throw insertErr;
+      return { uid, username: cleanUser, progress: initial };
     }
-    function setMode(mode){authMode=mode;let reg=mode==="register";$("mode-login").classList.toggle("active",!reg);$("mode-register").classList.toggle("active",reg);$("confirm-field").hidden=!reg;$("auth-submit").textContent=reg?"สมัครและเริ่มเรียน":"เข้าสู่ระบบ";$("auth-pass").autocomplete=reg?"new-password":"current-password";$("auth-msg").textContent=""}
-    $("mode-login").addEventListener("click",()=>setMode("login"));$("mode-register").addEventListener("click",()=>setMode("register"));
-    const submitAuth=async()=>{
-      const fail=t=>{$("auth-msg").textContent=t;$("auth-msg").className="form-msg error"};
-      let name=$("auth-user").value.trim().toLowerCase(),pass=$("auth-pass").value,users=readJSON(USERS_KEY,{});
-      if(!/^[a-z0-9ก-๙][a-z0-9ก-๙_.-]{2,19}$/.test(name))return fail("ชื่อผู้ใช้ต้องมี 3–20 ตัว ใช้ตัวอักษร ตัวเลข _ . - และไม่เว้นวรรค");
-      if(pass.length<6)return fail("รหัสผ่านต้องมีอย่างน้อย 6 ตัว");
-      $("auth-submit").disabled=true;
-      try{
-        if(authMode==="register"){
-          if(hasUser(users,name))return fail("มีชื่อผู้ใช้นี้ในเครื่องแล้ว");
-          if(pass!==$("auth-confirm").value)return fail("รหัสผ่านสองช่องไม่ตรงกัน");
-          let salt=Date.now()+"-"+Math.random().toString(36).slice(2),alg=window.crypto&&crypto.subtle?"pbkdf2":"simple";
-          users[name]={salt,alg,hash:await hashPassword(pass,salt,alg)};
-          if(!writeJSON(USERS_KEY,users)||!writeJSON(dataKey(name),blankData()))return fail("สร้างบัญชีไม่สำเร็จ เบราว์เซอร์ไม่ให้บันทึกข้อมูล");
-        }else if(!hasUser(users,name)||users[name].hash!==await hashPassword(pass,users[name].salt,users[name].alg))return fail("ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง ถ้ายังไม่เคยสมัครในเบราว์เซอร์นี้ ให้กด สมัครบัญชีใหม่");
-        try{($("auth-remember").checked?localStorage:sessionStorage).setItem(SESSION_KEY,name)}catch(err){}
-        $("auth-form").reset();$("auth-msg").textContent="";enter(name);
-      }catch(err){fail("เกิดข้อผิดพลาด: "+err.message)}
-      finally{$("auth-submit").disabled=false}
+
+    async function sbLogin(username, password) {
+      const cleanUser = username.trim().toLowerCase();
+      const { data: authData, error } = await sb.auth.signInWithPassword({ email: toAuthEmail(cleanUser), password });
+      if (error) throw error;
+      const uid = authData.user.id;
+      let { data: row, error: fetchErr } = await sb.from("player_progress").select("*").eq("user_id", uid).maybeSingle();
+      if (fetchErr) throw fetchErr;
+      if (!row) {
+        row = { user_id: uid, username: cleanUser, ...blankData(), goal: { days: 10, start: dayKey(), done: false } };
+        await sb.from("player_progress").insert(row);
+      }
+      return { uid, username: row.username || cleanUser, progress: row };
+    }
+
+    function setMode(mode) {
+      authMode = mode; let reg = mode === "register";
+      $("mode-login").classList.toggle("active", !reg);
+      $("mode-register").classList.toggle("active", reg);
+      $("confirm-field").hidden = !reg;
+      $("auth-submit").textContent = reg ? "สมัครและเริ่มเรียน" : "เข้าสู่ระบบ";
+      $("auth-pass").autocomplete = reg ? "new-password" : "current-password";
+      $("auth-msg").textContent = "";
+    }
+    $("mode-login").addEventListener("click", () => setMode("login"));
+    $("mode-register").addEventListener("click", () => setMode("register"));
+
+    const submitAuth = async () => {
+      const fail = t => { $("auth-msg").textContent = t; $("auth-msg").className = "form-msg error"; };
+      let name = $("auth-user").value.trim().toLowerCase(), pass = $("auth-pass").value;
+      if (!/^[a-z0-9][a-z0-9_.-]{2,19}$/.test(name)) return fail("ชื่อผู้ใช้ต้องมี 3–20 ตัว ใช้ตัวอักษรภาษาอังกฤษ a-z ตัวเลข _ . - และไม่เว้นวรรค");
+      if (pass.length < 6) return fail("รหัสผ่านต้องมีอย่างน้อย 6 ตัว");
+      $("auth-submit").disabled = true;
+      $("auth-msg").className = "form-msg";
+      $("auth-msg").textContent = "กำลังเชื่อมต่อ Supabase...";
+      try {
+        let sessionObj;
+        if (authMode === "register") {
+          if (pass !== $("auth-confirm").value) return fail("รหัสผ่านสองช่องไม่ตรงกัน");
+          sessionObj = await sbRegister(name, pass);
+        } else {
+          sessionObj = await sbLogin(name, pass);
+        }
+        $("auth-form").reset(); $("auth-msg").textContent = "";
+        enter(sessionObj.username, sessionObj.progress, sessionObj.uid);
+      } catch (err) {
+        let msg = err.message || "เกิดข้อผิดพลาด";
+        if (msg.includes("Invalid login credentials")) msg = "ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง";
+        else if (msg.includes("User already registered")) msg = "ชื่อผู้ใช้นี้ถูกใช้งานแล้ว";
+        fail(msg);
+      } finally {
+        $("auth-submit").disabled = false;
+      }
     };
-    $("auth-submit").addEventListener("click",submitAuth);
-    $("auth-form").addEventListener("keydown",e=>{if(e.key==="Enter"&&e.target.tagName==="INPUT"){e.preventDefault();if(!$("auth-submit").disabled)submitAuth()}});
-    $("auth-form").addEventListener("submit",e=>e.preventDefault());
+    $("auth-submit").addEventListener("click", submitAuth);
+    $("auth-form").addEventListener("keydown", e => { if (e.key === "Enter" && e.target.tagName === "INPUT") { e.preventDefault(); if (!$("auth-submit").disabled) submitAuth(); } });
+    $("auth-form").addEventListener("submit", e => e.preventDefault());
     $("script-warning").remove();
-    if(!readUsersExist())setMode("register");
-    if(!canStore)$("storage-warning").hidden=false;
-    function enter(name){
-      user=name;data={...blankData(),...readJSON(dataKey(name),{})};
-      $("auth-view").hidden=true;$("app-view").hidden=false;withIcon("user-name","user",name);
-      records=data.records;fillReminder();
-      let next=0;while(next<levels.length-1&&records.some(r=>r.level===next+1))next++;
-      loadLevel(next);showView("play");window.scrollTo(0,0);checkReminder();
+
+    function enter(name, loadedData = null, uid = null) {
+      user = name;
+      userId = uid;
+      data = { ...blankData(), ...(loadedData || readJSON(dataKey(name), {})) };
+      $("auth-view").hidden = true; $("app-view").hidden = false;
+      withIcon("user-name", "user", name);
+      records = data.records; fillReminder();
+      let next = 0; while (next < levels.length - 1 && records.some(r => r.level === next + 1)) next++;
+      loadLevel(next); showView("play"); window.scrollTo(0, 0); checkReminder();
     }
-    $("logout-btn").addEventListener("click",()=>{
-      if(running)return;try{localStorage.removeItem(SESSION_KEY);sessionStorage.removeItem(SESSION_KEY)}catch(e){}
-      user=null;data=null;records=[];$("toast").hidden=true;$("win-overlay").classList.remove("show");$("goal-msg").textContent="";$("app-view").hidden=true;$("auth-view").hidden=false;setMode("login");window.scrollTo(0,0);
+
+    $("logout-btn").addEventListener("click", async () => {
+      if (running) return;
+      try { await sb.auth.signOut(); } catch (e) {}
+      user = null; userId = null; data = null; records = [];
+      $("toast").hidden = true; $("win-overlay").classList.remove("show"); $("goal-msg").textContent = "";
+      $("app-view").hidden = true; $("auth-view").hidden = false; setMode("login"); window.scrollTo(0, 0);
     });
-    window.addEventListener("storage",e=>{if(user&&e.key===dataKey(user)&&e.newValue){data=JSON.parse(e.newValue);refresh()}});
-    setInterval(checkReminder,15000);
-    let shownDay=dayKey();setInterval(()=>{if(shownDay!==dayKey()){shownDay=dayKey();refresh()}},30000);
-    document.addEventListener("visibilitychange",()=>{if(!document.hidden){refresh();checkReminder()}});
-    
-    (function(){let name=null;try{name=sessionStorage.getItem(SESSION_KEY)||localStorage.getItem(SESSION_KEY)}catch(e){}if(name&&hasUser(readJSON(USERS_KEY,{}),name))enter(name)})();
+
+    setInterval(checkReminder, 15000);
+    let shownDay = dayKey(); setInterval(() => { if (shownDay !== dayKey()) { shownDay = dayKey(); refresh(); } }, 30000);
+    document.addEventListener("visibilitychange", () => { if (!document.hidden) { refresh(); checkReminder(); } });
+
+    (async function restoreSession() {
+      try {
+        const { data: { session } } = await sb.auth.getSession();
+        if (session && session.user) {
+          const uid = session.user.id;
+          const fallbackName = (session.user.email || "").split("@")[0] || "player";
+          const { data: row } = await sb.from("player_progress").select("*").eq("user_id", uid).maybeSingle();
+          enter((row && row.username) || fallbackName, row || {}, uid);
+        }
+      } catch (e) {
+        console.error("Session restore error:", e);
+      }
+    })();
   </script>
  </body>
 </html>
